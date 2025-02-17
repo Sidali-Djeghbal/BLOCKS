@@ -1,6 +1,6 @@
 import Image from "next/image";
 import WorflowImg01 from "@/public/images/workflow-01-contribution.svg";
-import WorflowImg02 from "@/public/images/workflow-02.png";
+import WorflowImg02 from "@/public/images/workflow-02-inspiration.svg";
 import WorflowImg03 from "@/public/images/workflow-03-inspiration.svg";
 import Spotlight from "@/components/spotlight";
 
