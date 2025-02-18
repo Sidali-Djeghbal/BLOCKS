@@ -1,66 +1,93 @@
-## Index - Specifications
+# TG Blocks
+
+TG Blocks is an interactive learning platform designed to help beginners in programming, particularly first-year computer science students, understand algorithms through visual representation. It offers a block-based learning environment with interactive challenges and real-time code generation.
+
+## 📌 Index - Specifications
+
 - [TG Blocks](#tg-blocks)
-- [I. Introduction](#i-introduction)
-    - [I.1 Problem Statement](#i1-problem-statement)
-    - [I.2 Project Overview](#i2-project-overview)
-- [II. Objectives of the Project](#ii-objectives-of-the-project)
-- [III. Key Features](#iii-key-features)
-- [IV. Technologies Stack](#iv-technologies-stack)
-    - [IV.1 Frontend Technologies](#iv1-frontend-technologies)
-    - [IV.2 Backend Technologies](#iv2-backend-technologies)
-    - [IV.3 Database Technologies](#iv3-database-technologies)
+- [I. Overview](#i-overview)
+- [II. Features](#ii-features)
+- [III. Technologies Used](#iii-technologies-used)
+- [IV. Installation Guide](#iv-installation-guide)
 - [V. Target Audience](#v-target-audience)
 - [VI. Keywords](#vi-keywords)
 
-## I. Introduction
+---
 
-### I.1 Problem Statement:
-Beginners in programming, especially first-year students in the computer science field, generally face challenges in understanding algorithms and often confuse them with programming languages. This confusion acts as a barrier to effectively learning the fundamentals of programming.
+## I. Overview
 
-### I.2 Project Overview:
-**TG Blocks** is a platform aims to bridge the gap between algorithms and programming languages. It offers a visual representation of algorithms alongside their corresponding code in multiple programming languages. This platform will assist beginners in understanding the logic behind algorithms without the complications of programming language syntax and without the distraction of compiler errors.
+TG Blocks provides a **visual representation of algorithms** alongside their corresponding **C code**. The platform enables users to build and understand algorithms using block-based programming while simultaneously viewing the equivalent code. Additionally, TG Blocks offers **interactive learning services** with step-by-step challenges to reinforce algorithmic thinking.
 
-## II. Objectives of the Project
+---
 
-- Develop a user-friendly web interface for the platform. 
-> the interface is the ***most important*** part of the project, as it is the first thing the user interacts with.
-- Implement a visual representation of algorithms using block-based programming.
-- Provide the corresponding code of the algorithm in multiple programming languages.
-- Implement a feature that allows users to contribute to the platform by adding new algorithms or improving existing ones.
+## II. Features
 
-> Until now, there has not been a good version of the simulare projects for mobile devices. Therefore, we will attempt to provide a mobile version of the platform
+✅ **User-friendly Interface** – Built with React for a smooth and interactive user experience.
 
-## III. Key Features 
+✅ **Interactive Learning** – Users can complete challenges and solve algorithmic problems.
 
-- **User-friendly Interface**: The platform will have an intuitive and easy-to-use interface.
-- Provide a Desctop ***offline*** version of the platform.
-- **Visual Representation**: The platform will provide a visual representation of algorithms using block-based programming.
-- **Multiple Programming Languages**: The platform will provide the corresponding code of the algorithm in multiple programming languages.
-    - as a start, we will provide just a single language, the language must be a simple and Enterprited language like Python.
-- **Contribution Feature**: The platform will allow users to contribute to the platform by adding new algorithms or improving existing ones.    
-- **Authentication**: The platform will have an authentication system to allow users to save their progress and contributions.`not required in the offline version`
+✅ **Visual Representation** – Uses block-based programming to simplify algorithm design.
 
-## IV. Technologies Stack 
+✅ **Multiple Programming Languages** – Primarily supports **C**, with future expansions planned.
 
-### IV.1 Frontend Technologies:
+✅ **Offline Version** – The platform is available as a standalone desktop application.
 
-- use any frontend technologies you prefer. 
-> we recommend Single Page Application (SPA) frameworks. and electron.js for desktop applications.
+✅ **Contribution Feature** – Users can add or modify algorithms within the platform.
 
-### IV.2 Backend Technologies:
+✅ **Authentication System** – Allows users to save progress and contributions *(not included in the offline version).*
 
-- use any backend technologies you prefer. 
+---
 
-### IV.3 Database Technologies:
+## III. Technologies Used
 
-- SQL Database as the primary database. `for web version`
+### Frontend
+- **React.js** – Provides an interactive user interface.
+- **Electron.js** – Used for the offline desktop version.
 
-## V. Target Audience :
-- First-year students in the computer science field.
-- Beginners in programming.
-- Instructors who want to teach algorithms in a more interactive way.
+### Backend
+- **PHP** – Handles server-side logic and API requests.
+- **Laravel** – Backend framework for efficient development.
 
-## VI. keywords: 
-this keywords will help you to find more information about the project.
+### Database
+- **MySQL** – Manages user data and algorithm storage.
 
-#secratch #Algorithms #Programming #Block-Based-Programming #secratch #Electron.js
+### Primary Programming Language
+- **C** – The main language used for algorithm implementation and execution.
+
+---
+
+## IV. Installation Guide
+
+### Prerequisites
+- Node.js and npm (for frontend setup)
+- PHP and Composer (for backend setup)
+- MySQL (for database management)
+
+### Steps to Run Locally
+
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/Sidali-Djeghbal/BLOCKS.git
+   cd BLOCKS
+   npm install
+   npm start
+   ```
+
+2. **Access the Application**
+   Open `http://localhost:3000` in your browser.
+
+---
+
+## V. Target Audience
+
+🎯 First-year computer science students.
+
+🎯 Beginners in programming.
+
+🎯 Instructors seeking interactive algorithm teaching tools.
+
+---
+
+## VI. Keywords
+
+🔎 #React #PHP #Laravel #C #Algorithms #Programming #Block-Based-Programming #Electron.js #InteractiveLearning
