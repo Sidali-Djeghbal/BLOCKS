@@ -37,24 +37,9 @@ export default function SignUp() {
               <div>
                 <label
                   className="mb-1 block text-sm font-medium text-indigo-200/65"
-                  htmlFor="name"
-                >
-                  Company Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="company"
-                  type="text"
-                  className="form-input w-full"
-                  placeholder="Your company name"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  className="mb-1 block text-sm font-medium text-indigo-200/65"
                   htmlFor="email"
                 >
-                  Work Email <span className="text-red-500">*</span>
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="email"
