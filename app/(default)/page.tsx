@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Home - Blocks",
-  description: "Page description",
+  title: "Home - T.G Blocks",
+  description: "description",
 };
 
 import PageIllustration from "@/components/page-illustration";

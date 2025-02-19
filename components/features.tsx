@@ -142,7 +142,8 @@ export default function Features() {
                 Feature 4
               </h3>
               <p className="text-indigo-200/65">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo dicta, eveniet nulla enim harum recusandae.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo
+                dicta, eveniet nulla enim harum recusandae.
               </p>
             </article>
             <article>
@@ -162,7 +163,8 @@ export default function Features() {
                 Feature 5
               </h3>
               <p className="text-indigo-200/65">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat veritatis aliquid quo veniam totam ullam?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+                veritatis aliquid quo veniam totam ullam?
               </p>
             </article>
             <article>
@@ -182,7 +184,8 @@ export default function Features() {
                 Feature 6
               </h3>
               <p className="text-indigo-200/65">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et mollitia sit eum sunt numquam ex!
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et
+                mollitia sit eum sunt numquam ex!
               </p>
             </article>
           </div>

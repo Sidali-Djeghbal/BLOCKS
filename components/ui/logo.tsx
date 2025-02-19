@@ -7,8 +7,8 @@ export default function Logo() {
       <Image
         src={"/images/logo.svg"}
         alt="TechGeeks Logo"
-        width={48}
-        height={48}
+        width={56}
+        height={56}
       />
     </Link>
   );

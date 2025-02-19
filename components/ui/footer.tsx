@@ -20,11 +20,11 @@ export default function Footer() {
         </div>
         <div className="justify-between pt-8 lg:grid-cols-[repeat(4,minmax(0,140px))_1fr] lg:grid-rows-1 xl:gap-20 items-center">
           <div className="col-span-2 lg:col-span-1 text-center flex flex-col justify-center">
-            <div className="mb-3">
+            <div>
               <Logo />
             </div>
             <div className="text-sm">
-              <p className="mb-3 text-indigo-200/65">
+              <p className="mb-2 text-indigo-200/65">
                 © 2025 - TechGeeks.
               </p>
             </div>
