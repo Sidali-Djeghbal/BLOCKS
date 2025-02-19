@@ -100,7 +100,7 @@ export default function FeedbackPage() {
           </h2>
           <div
             className={`relative ${
-              isLoggedIn ? "filter blur-sm pointer-events-none" : ""
+              !isLoggedIn ? "filter blur-sm pointer-events-none" : ""
             }`}
           >
             <form
@@ -174,9 +174,9 @@ export default function FeedbackPage() {
               </button>
             </form>
           </div>
-          {isLoggedIn && (
+          {!isLoggedIn && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center z-10">
+              <div className="bg-gray-900 border  00 p-6 rounded-lg shadow-lg text-center z-10">
                 <h3 className="text-xl font-semibold mb-2">Please Sign In</h3>
                 <p className="text-gray-600 mb-4 font-bold">
                   You need to be logged in to submit feedback
