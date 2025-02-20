@@ -46,6 +46,27 @@ export const cBlocks = {
       this.setTooltip('Declare a variable');
     }
   },
+  'variable_set': {
+    init: function() {
+      this.appendDummyInput()
+          .appendField(new Blockly.FieldTextInput("myVar"), "VAR") 
+          .appendField(new Blockly.FieldDropdown([
+            ["=", "="],
+            ["+=", "+="],
+            ["-=", "-="],
+            ["*=", "*="],
+            ["/=", "/="]
+          ]), "OPERATION");
+      this.appendValueInput("VALUE")
+          .setCheck(null);
+      this.setInputsInline(true);
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("Set, increment, or decrement a variable using a custom name");
+    }
+},
+
 
   'c_if': {
     init: function() {
@@ -110,7 +131,7 @@ export const cBlocks = {
       this.setNextStatement(true, null);
       this.setColour(120);
       this.setTooltip('For loop');
-    }
+  }
   },
 
   'c_main': {
@@ -258,6 +279,26 @@ export const cBlocks = {
         this.setColour(160);
         this.setTooltip('A text (string) input.');
       }
+  },
+  'c_scan':{
+    init: function () {
+      this.appendDummyInput()
+          .appendField("scanf")
+          .appendField(new Blockly.FieldDropdown([
+              ["int", "%d"],
+              ["char", "%c"],
+              ["float", "%f"],
+              ["double", "%lf"]
+          ]), "VAR_TYPE")
+          .appendField("&")
+          .appendField(new Blockly.FieldTextInput("variable_name"), "VAR_NAME");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("Scans a value and stores it in a variable.");
+      this.setHelpUrl("");
   }
+}
+
 };
 

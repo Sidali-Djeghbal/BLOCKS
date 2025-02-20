@@ -13,6 +13,10 @@ export const toolbox = {
         {
           "kind": "block",
           "type": "c_variable_get"
+        },
+        {
+          "kind":"block",
+          "type":"variable_set",
         }
       ]
     },
@@ -101,6 +105,10 @@ export const toolbox = {
         {
           "kind": "block",
           "type": "c_print_number"
+        },
+        {
+          "kind":"block",
+          "type":"c_scan",
         }
       ]
     },{

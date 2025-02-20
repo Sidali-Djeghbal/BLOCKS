@@ -36,6 +36,14 @@ CGenerator.forBlock = {
      return `${variableType} ${variableName} = ${variableValue};\n`;
 
 },
+'variable_set':function(block){
+  var varName = block.getFieldValue('VAR'); 
+    var operation = block.getFieldValue('OPERATION');
+    var value = CGenerator.valueToCode(block, "VALUE", CGenerator.ORDER_ATOMIC) || "0";
+
+    var code = varName + " " + operation + " " + value + ";\n";
+    return code;
+},
 
   'c_if': function(block) {
     const condition = CGenerator.valueToCode(block, 'CONDITION', CGenerator.ORDER_NONE) || '0';
@@ -126,8 +134,7 @@ CGenerator.forBlock = {
     return [`(${A} ${operator} ${B})`, CGenerator.ORDER_ATOMIC];
   },
   'c_variable_get': function(block) {
-    const variable = block.getFieldValue('VAR');
-    return [variable, CGenerator.ORDER_ATOMIC];
+    return [block.getFieldValue('VAR'), CGenerator.ORDER_ATOMIC];
   },
   'c_logic_compare':function(block){
     let A = CGenerator.valueToCode(block, 'A', CGenerator.ORDER_ATOMIC) || '0';
@@ -139,6 +146,13 @@ CGenerator.forBlock = {
   'c_text':function(block){
     let text = block.getFieldValue('TEXT');
     return [`"${text}"`, CGenerator.ORDER_ATOMIC];
+  },
+  'c_scan':function(block){
+    var varType = block.getFieldValue('VAR_TYPE'); // Gets the selected format specifier
+    var varName = block.getFieldValue('VAR_NAME'); // Gets the variable name
+
+    var code = `scanf("${varType}", &${varName});\n`;
+    return code;
   }
 };
 
