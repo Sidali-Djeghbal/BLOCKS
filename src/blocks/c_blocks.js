@@ -14,14 +14,14 @@ export const cBlocks = {
   },
   'c_print_text':{
     init: function() {
-        this.appendValueInput('TEXT')
-            .setCheck('String')
-            .appendField('print text');
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(160);
-        this.setTooltip('Prints a text string to the console.');
-      }
+      this.appendDummyInput()
+          .appendField("print")
+          .appendField(new Blockly.FieldTextInput(""), "TEXT_INPUT");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(160);
+      this.setTooltip("Prints a text string to the console.");
+  }
   },
   'c_variable_declare': {
     init: function() {
@@ -161,7 +161,7 @@ export const cBlocks = {
             ["char", "char"]
           ]), "TYPE")
           .appendField(new Blockly.FieldTextInput("param"), "VAR");
-      this.setOutput(true, "Function_Parameter"); // 👈 Change to OUTPUT instead of statement
+      this.setOutput(true, "Function_Parameter"); 
       this.setColour(230);
       this.setTooltip("Function parameter");
       this.setHelpUrl("");

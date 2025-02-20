@@ -12,14 +12,13 @@ CGenerator.forBlock = {
     return `printf("%d", ${number});\n`;  
   },
   'c_print_text': function(block){
-    let text = CGenerator.valueToCode(block, 'TEXT', CGenerator.ORDER_NONE) || '""';
-    return `printf("%s", ${text});\n`;
+    let text = block.getFieldValue("TEXT_INPUT") || ""; // Get text directly from input field
+    return `printf("${text}");\n`;  
   },
   'c_variable_declare': function(block) {
     var variableType = block.getFieldValue('TYPE');  
     var variableName = block.getFieldValue('VAR');   
-    var variableValue = CGenerator.valueToCode(block, 'VALUE', CGenerator.ORDER_ATOMIC) || '0'; // Default to 0
-
+    var variableValue = CGenerator.valueToCode(block, 'VALUE', CGenerator.ORDER_ATOMIC) || '0'; 
      return `${variableType} ${variableName} = ${variableValue};\n`;
 
 },
