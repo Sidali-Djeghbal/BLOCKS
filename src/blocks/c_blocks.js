@@ -3,14 +3,20 @@ import * as Blockly from 'blockly';
 export const cBlocks = {
   'c_print_number': {
     init: function() {
-        this.appendValueInput('NUMBER')
-            .setCheck('Number')
-            .appendField('print number');
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(230);
-        this.setTooltip('Prints a number to the console.');
-      }
+    this.appendValueInput("NUMBER")
+        .setCheck(null)
+        .appendField("print")
+        .appendField(new Blockly.FieldDropdown([
+          ["int", "int"],
+          ["float", "float"],
+          ["double", "double"]
+        ]), "VAR_TYPE");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("Print a number based on its type");
+    this.setHelpUrl("");
+  }
   },
   'c_print_text':{
     init: function() {
@@ -60,10 +66,10 @@ export const cBlocks = {
       this.appendDummyInput()
           .appendField("else");
       this.appendStatementInput("DO")
-          .setCheck(null) // Allows any nested blocks inside the else
+          .setCheck(null) 
           .appendField("do");
-      this.setPreviousStatement(true, null); // Connects after an if-block
-      this.setNextStatement(true, null); // Allows blocks after else
+      this.setPreviousStatement(true, null); 
+      this.setNextStatement(true, null); 
       this.setColour(180);
       this.setTooltip("Executes code if the if-condition is false.");
   }

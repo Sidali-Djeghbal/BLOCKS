@@ -9,10 +9,24 @@ CGenerator.ORDER_NONE = 99;
 CGenerator.forBlock = {
   'c_print_number': function(block) {
     let number = CGenerator.valueToCode(block, 'NUMBER', CGenerator.ORDER_NONE) || '0';
-    return `printf("%d", ${number});\n`;  
-  },
+    let varType = block.getFieldValue('VAR_TYPE');
+    
+    let format;
+    switch(varType) {
+        case 'float':
+            format = '%f';
+            break;
+        case 'double':
+            format = '%lf';
+            break;
+        default:
+            format = '%d';
+    }
+    
+    return `printf("${format}", ${number});\n`;
+},
   'c_print_text': function(block){
-    let text = block.getFieldValue("TEXT_INPUT") || ""; // Get text directly from input field
+    let text = block.getFieldValue("TEXT_INPUT") || ""; 
     return `printf("${text}");\n`;  
   },
   'c_variable_declare': function(block) {
@@ -49,10 +63,7 @@ CGenerator.forBlock = {
   },
 
   'c_main': function(block) {
-    var statements_body = CGenerator.statementToCode(block, 'BODY').trim();
-    console.log("Generated body: ", statements_body);
-
-    
+    var statements_body = CGenerator.statementToCode(block, 'BODY').trim();  
     var code = `int main() {\n${statements_body}\n  return 0;\n}\n`;
     return code;
   },
