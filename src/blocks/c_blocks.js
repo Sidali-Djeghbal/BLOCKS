@@ -94,20 +94,81 @@ export const cBlocks = {
     }
   },
 
+  'c_main': {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("main");
+      this.appendStatementInput("BODY")
+          .setCheck(null);
+      this.setColour(230);
+      this.setTooltip("Defines the main function.");
+      this.setHelpUrl("");
+  }
+  },
+
   'c_function': {
     init: function() {
       this.appendDummyInput()
-          .appendField('function')
-          .appendField(new Blockly.FieldTextInput('myFunction'), 'NAME');
-      this.appendStatementInput('BODY')
+          .appendField("Function")
+          .appendField(new Blockly.FieldTextInput("myFunction"), "NAME");
+  
+      // Add two parameter inputs
+      this.appendValueInput("PARAM1")
+          .setCheck("Function_Parameter")
+          .appendField("Parameter 1:");
+      
+      this.appendValueInput("PARAM2")
+          .setCheck("Function_Parameter")
+          .appendField("Parameter 2:");
+  
+      this.appendStatementInput("BODY")
           .setCheck(null)
-          .appendField('do');
-      this.setColour(290);
-      this.setTooltip('Function definition');
+          .appendField("do");
+  
+      this.setInputsInline(false);
+      this.setColour(160);
+      this.setTooltip("Defines a function with two parameters");
+      this.setHelpUrl("");
+    }
+  },
+ 'c_function_call': {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('call')
+        .appendField(new Blockly.FieldTextInput('myFunction'), 'NAME');
+    
+    this.appendValueInput('ARG1')
+        .setCheck(null)
+        .appendField('parameter 1');
+    
+    this.appendValueInput('ARG2')
+        .setCheck(null)
+        .appendField('parameter 2');
+    
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(160);
+    this.setTooltip('Calls a function with two parameters');
+    this.setHelpUrl('');
+  }
+},
+  'c_function_parameter':{
+    init: function() {
+      this.appendDummyInput()
+          .appendField(new Blockly.FieldDropdown([
+            ["int", "int"], 
+            ["float", "float"], 
+            ["char", "char"]
+          ]), "TYPE")
+          .appendField(new Blockly.FieldTextInput("param"), "VAR");
+      this.setOutput(true, "Function_Parameter"); // 👈 Change to OUTPUT instead of statement
+      this.setColour(230);
+      this.setTooltip("Function parameter");
+      this.setHelpUrl("");
     }
   },
 
-  // 🔹 Number Block
+
   'c_number': {
     init: function() {
       this.appendDummyInput()
@@ -118,7 +179,6 @@ export const cBlocks = {
     }
   },
 
-  // 🔹 Arithmetic Operations Block
   'c_arithmetic': {
     init: function() {
       this.appendValueInput('A')
@@ -142,7 +202,7 @@ export const cBlocks = {
     init: function() {
       this.appendDummyInput()
           .appendField(new Blockly.FieldTextInput('x'), 'VAR');
-      this.setOutput(true, 'Number'); // Can be adjusted based on type system
+      this.setOutput(true, 'Number');
       this.setColour(330);
       this.setPreviousStatement(true,null);
       this.setPreviousStatement(true,null);
@@ -152,7 +212,7 @@ export const cBlocks = {
   'c_logic_compare': {
   init: function() {
     this.appendValueInput('A')
-        .setCheck('Number');  // Can be extended to other types like String
+        .setCheck('Number'); 
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([
           ['==', '=='],
@@ -164,7 +224,7 @@ export const cBlocks = {
         ]), 'OP');
     this.appendValueInput('B')
         .setCheck('Number');
-    this.setOutput(true, 'Boolean');  // Returns a boolean value
+    this.setOutput(true, 'Boolean');  
     this.setColour(210);
     this.setTooltip('Comparison operator');
   }

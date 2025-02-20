@@ -14,6 +14,8 @@ const ws = Blockly.inject(blocklyDiv, { toolbox });
 // Generate C code
 const generateCode = () => {
   const code = CGenerator.workspaceToCode(ws);
+  console.log(CGenerator.workspaceToCode(ws));  // Check generated C code
+
   document.getElementById('generatedCode').innerText = code;
 };
 

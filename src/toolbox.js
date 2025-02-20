@@ -69,7 +69,19 @@ export const toolbox = {
       "contents": [
         {
           "kind": "block",
-          "type": "c_function"
+          "type": "c_main"
+        },
+        {
+          "kind":"block",
+          "type":"c_function"
+        },
+        {
+          "kind":"block",
+          "type":"c_function_call"
+        },
+        {
+          "kind":"block",
+          "type":"c_function_parameter"
         }
       ]
     },

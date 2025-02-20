@@ -9,19 +9,20 @@ CGenerator.ORDER_NONE = 99;
 CGenerator.forBlock = {
   'c_print_number': function(block) {
     let number = CGenerator.valueToCode(block, 'NUMBER', CGenerator.ORDER_NONE) || '0';
-    return `printf("%d", ${number});\n`;  // Change `%d` to `%f` for floats
+    return `printf("%d", ${number});\n`;  
   },
   'c_print_text': function(block){
     let text = CGenerator.valueToCode(block, 'TEXT', CGenerator.ORDER_NONE) || '""';
     return `printf("%s", ${text});\n`;
   },
   'c_variable_declare': function(block) {
-    const type = block.getFieldValue('TYPE');
-    const variable = block.getFieldValue('VAR');
-    const value = CGenerator.valueToCode(block, 'VALUE', CGenerator.ORDER_ASSIGNMENT) || '0';
+    var variableType = block.getFieldValue('TYPE');  
+    var variableName = block.getFieldValue('VAR');   
+    var variableValue = CGenerator.valueToCode(block, 'VALUE', CGenerator.ORDER_ATOMIC) || '0'; // Default to 0
 
-    return `${type} ${variable} = ${value};\n`;
-  },
+     return `${variableType} ${variableName} = ${variableValue};\n`;
+
+},
 
   'c_if': function(block) {
     const condition = CGenerator.valueToCode(block, 'CONDITION', CGenerator.ORDER_NONE) || '0';
@@ -44,19 +45,53 @@ CGenerator.forBlock = {
     return `for (int ${variable} = ${start}; ${condition}; ${variable} += ${step}) {\n${statements}}\n`;
   },
 
-  'c_function': function(block) {
-    const name = block.getFieldValue('NAME');
-    const body = CGenerator.statementToCode(block, 'BODY');
-    return `void ${name}() {\n${body}}\n`;
+  'c_main': function(block) {
+    var statements_body = CGenerator.statementToCode(block, 'BODY').trim();
+    console.log("Generated body: ", statements_body);
+
+    
+    var code = `int main() {\n${statements_body}\n  return 0;\n}\n`;
+    return code;
   },
 
-  // 🔹 Generator for c_number
+  'c_function': function(block) {
+  // Get basic function elements
+  var functionName = block.getFieldValue('NAME');
+  var param1 = CGenerator.valueToCode(block, 'PARAM1', CGenerator.ORDER_ATOMIC) || '';
+  var param2 = CGenerator.valueToCode(block, 'PARAM2', CGenerator.ORDER_ATOMIC) || '';
+  var statements = CGenerator.statementToCode(block, 'BODY') || '  // Empty function\n';
+  
+  // Combine parameters
+  var parameters = param1 + (param1 && param2 ? ', ' : '') + param2 || 'void';
+  
+  return `void ${functionName}(${parameters}) {\n${statements}}\n`;
+},
+
+
+
+  'c_function_call': function(block) {
+  var functionName = block.getFieldValue('NAME');
+  var arg1 = CGenerator.valueToCode(block, 'ARG1', CGenerator.ORDER_ATOMIC) || '0';
+  var arg2 = CGenerator.valueToCode(block, 'ARG2', CGenerator.ORDER_ATOMIC) || '0';
+  
+  return `${functionName}(${arg1}, ${arg2});\n`;
+},
+'c_function_parameter':function(block){
+  let paramType = block.getFieldValue("TYPE"); // Get the selected type (int, float, char)
+    let paramName = block.getFieldValue("VAR");  // Get the parameter name
+
+    let code = paramType + " " + paramName;  // Format as "int x", "float y", etc.
+
+    return [code, CGenerator.ORDER_ATOMIC];
+},
+  
   'c_number': function(block) {
     let number = block.getFieldValue('NUM');
     return [number, CGenerator.ORDER_ATOMIC];
   },
 
-  // 🔹 Generator for c_arithmetic
+
+
   'c_arithmetic': function(block) {
     let A = CGenerator.valueToCode(block, 'A', CGenerator.ORDER_ATOMIC) || '0';
     let B = CGenerator.valueToCode(block, 'B', CGenerator.ORDER_ATOMIC) || '0';
@@ -91,12 +126,24 @@ CGenerator.init = function(workspace) {
       this.nameDB_.reset();
     }
   };
+
+  CGenerator.scrub_ = function(block, code, opt_thisOnly) {
+    // Get the next block if it exists
+    const nextBlock = block.getNextBlock();
+    let nextCode = '';
+    
+    if (nextBlock && !opt_thisOnly) {
+      nextCode = CGenerator.blockToCode(nextBlock);
+    }
+    
+    return code + nextCode;
+  };
   
   CGenerator.finish = function(code) {
     let includes = '#include <stdio.h>\n#include <stdlib.h>\n\n';
   
-    if (!code.includes('int main')) {
-      code = 'int main() {\n' + this.prefixLines(code, '    ') + '\n    return 0;\n}';
+    if (!code) {
+      code=" ";
     }
   
     return includes + code;
