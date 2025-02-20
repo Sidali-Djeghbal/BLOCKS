@@ -98,7 +98,7 @@ export default function Header() {
                     </button>
                     <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Link
-                        href="/"
+                        href="/profileCard"
                         className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
                       >
                         My Profile
