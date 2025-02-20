@@ -55,6 +55,19 @@ export const cBlocks = {
       this.setTooltip('If statement');
     }
   },
+  'c_else':{
+    init: function() {
+      this.appendDummyInput()
+          .appendField("else");
+      this.appendStatementInput("DO")
+          .setCheck(null) // Allows any nested blocks inside the else
+          .appendField("do");
+      this.setPreviousStatement(true, null); // Connects after an if-block
+      this.setNextStatement(true, null); // Allows blocks after else
+      this.setColour(180);
+      this.setTooltip("Executes code if the if-condition is false.");
+  }
+  },
 
   'c_while': {
     init: function() {

@@ -41,6 +41,10 @@ export const toolbox = {
           "type": "c_if"
         },
         {
+           "kind":"block",
+           "type":"c_else"
+        },
+        {
           "kind": "block",
           "type": "c_logic_compare"
         }

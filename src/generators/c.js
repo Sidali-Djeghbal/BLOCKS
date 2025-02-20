@@ -28,6 +28,10 @@ CGenerator.forBlock = {
     const statements = CGenerator.statementToCode(block, 'DO');
     return `if (${condition}) {\n${statements}}\n`;
   },
+  'c_else':function(block){
+    const statements = CGenerator.statementToCode(block, 'DO');
+    return `else {\n${statements}}\n`;
+  },
 
   'c_while': function(block) {
     const condition = CGenerator.valueToCode(block, 'CONDITION', CGenerator.ORDER_NONE) || '0';
@@ -54,13 +58,13 @@ CGenerator.forBlock = {
   },
 
   'c_function': function(block) {
-  // Get basic function elements
+  
   var functionName = block.getFieldValue('NAME');
   var param1 = CGenerator.valueToCode(block, 'PARAM1', CGenerator.ORDER_ATOMIC) || '';
   var param2 = CGenerator.valueToCode(block, 'PARAM2', CGenerator.ORDER_ATOMIC) || '';
   var statements = CGenerator.statementToCode(block, 'BODY') || '  // Empty function\n';
   
-  // Combine parameters
+
   var parameters = param1 + (param1 && param2 ? ', ' : '') + param2 || 'void';
   
   return `void ${functionName}(${parameters}) {\n${statements}}\n`;
@@ -69,17 +73,30 @@ CGenerator.forBlock = {
 
 
   'c_function_call': function(block) {
-  var functionName = block.getFieldValue('NAME');
-  var arg1 = CGenerator.valueToCode(block, 'ARG1', CGenerator.ORDER_ATOMIC) || '0';
-  var arg2 = CGenerator.valueToCode(block, 'ARG2', CGenerator.ORDER_ATOMIC) || '0';
+    const functionName = block.getFieldValue('NAME');
   
-  return `${functionName}(${arg1}, ${arg2});\n`;
+    const arg1 = CGenerator.valueToCode(block, 'ARG1', CGenerator.ORDER_NONE) || '';
+    
+    const arg2 = CGenerator.valueToCode(block, 'ARG2', CGenerator.ORDER_NONE);
+
+    
+    let code = `${functionName}(`;
+    if (arg1) {
+        code += arg1;
+    }
+    if (arg2) {
+        code += `, ${arg2}`;
+    }
+    code += `);\n`;
+
+    return code;
+
 },
 'c_function_parameter':function(block){
-  let paramType = block.getFieldValue("TYPE"); // Get the selected type (int, float, char)
-    let paramName = block.getFieldValue("VAR");  // Get the parameter name
+  let paramType = block.getFieldValue("TYPE"); 
+    let paramName = block.getFieldValue("VAR");  
 
-    let code = paramType + " " + paramName;  // Format as "int x", "float y", etc.
+    let code = paramType + " " + paramName;  
 
     return [code, CGenerator.ORDER_ATOMIC];
 },
