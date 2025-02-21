@@ -1,55 +1,58 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import path from 'path';
-
-const execAsync = promisify(exec);
 
 export async function POST(request: Request) {
   try {
     const { code } = await request.json();
-    
-    // Write the C code to a temporary file in the OS temp directory
-    const tempDir = process.env.TEMP || '/tmp';
-    const filePath = path.join(tempDir, 'temp.c');
-    const outputPath = path.join(tempDir, 'temp.exe');
-    await writeFile(filePath, code);
 
-    // Check if GCC is installed
-    try {
-      await execAsync('gcc --version');
-    } catch (error) {
+    // Use Judge0 API for compilation and execution
+    const response = await fetch('https://judge0-ce.p.rapidapi.com/submissions', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+      },
+      body: JSON.stringify({
+        source_code: code,
+        language_id: 4, // ID for C (gcc 9.2.0)
+        stdin: '',
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to compile code');
+    }
+
+    const { token } = await response.json();
+
+    // Wait for the submission to be processed
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Get the submission result
+    const resultResponse = await fetch(`https://judge0-ce.p.rapidapi.com/submissions/${token}`, {
+      headers: {
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+      }
+    });
+
+    if (!resultResponse.ok) {
+      throw new Error('Failed to get compilation result');
+    }
+
+    const result = await resultResponse.json();
+
+    if (result.status.id === 3) { // Accepted
+      return NextResponse.json({
+        success: true,
+        output: `Compilation successful!\nProgram output:\n${result.stdout || 'No output'}${result.stderr ? `\nErrors:\n${result.stderr}` : ''}`
+      });
+    } else {
       return NextResponse.json({
         success: false,
-        output: 'GCC compiler is not installed. Please install GCC to compile C code.'
+        output: result.compile_output || result.stderr || 'Compilation failed'
       });
     }
-
-    // Compile the C code
-    const { stdout, stderr } = await execAsync(`gcc ${filePath} -o ${outputPath}`);
-
-    // If compilation is successful, run the program
-    if (!stderr) {
-      try {
-        const { stdout: programOutput, stderr: programError } = await execAsync(outputPath);
-        return NextResponse.json({
-          success: true,
-          output: `Compilation successful!\nProgram output:\n${programOutput || 'No output'}${programError ? `\nErrors:\n${programError}` : ''}`
-        });
-      } catch (runError) {
-        return NextResponse.json({
-          success: false,
-          output: `Program execution error: ${runError instanceof Error ? runError.message : 'Unknown error'}`
-        });
-      }
-    }
-
-    // Return compilation error if any
-    return NextResponse.json({
-      success: false,
-      output: `Compilation error:\n${stderr}`
-    });
 
   } catch (error) {
     // Return error as JSON
