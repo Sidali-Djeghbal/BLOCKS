@@ -3,13 +3,21 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const { code } = await request.json();
+    const apiKey = process.env.RAPIDAPI_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json({
+        success: false,
+        output: 'Compilation error: API key not configured. Please set the RAPIDAPI_KEY environment variable.'
+      }, { status: 500 });
+    }
 
     // Use Judge0 API for compilation and execution
     const response = await fetch('https://judge0-ce.p.rapidapi.com/submissions', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
       },
       body: JSON.stringify({
@@ -20,7 +28,8 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to compile code');
+      const errorData = await response.text();
+      throw new Error(`Failed to compile code: ${errorData}`);
     }
 
     const { token } = await response.json();
@@ -31,13 +40,14 @@ export async function POST(request: Request) {
     // Get the submission result
     const resultResponse = await fetch(`https://judge0-ce.p.rapidapi.com/submissions/${token}`, {
       headers: {
-        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
       }
     });
 
     if (!resultResponse.ok) {
-      throw new Error('Failed to get compilation result');
+      const errorData = await resultResponse.text();
+      throw new Error(`Failed to get compilation result: ${errorData}`);
     }
 
     const result = await resultResponse.json();
