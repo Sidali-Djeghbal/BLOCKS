@@ -4,11 +4,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle, FaSyncAlt } from "react-icons/fa";
 import Image from "next/image";
 
+/*
 interface FlippableCardProps {
-  role: "admin" | "user";
+ role: "admin" | "user";
 }
+ */
 
-const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {
+/*const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {*/  // TO DO: Change thiis to perform the check
+const FlippableCard = () => {
+  const role = "admin"; // TO DO: Change this to perform the check
   const [isFlipped, setIsFlipped] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const innerCardRef = useRef<HTMLDivElement | null>(null);
@@ -50,10 +54,8 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {
     };
   }, []);
 
-  const fakeRole = "admin";
-  role = fakeRole;
-
   return (
+    
     <div className="flex justify-center items-center h-screen">
       <div className="relative w-80 h-96 perspective" ref={cardRef}>
         <div
