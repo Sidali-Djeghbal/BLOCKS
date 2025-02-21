@@ -16,6 +16,16 @@ export async function POST(request: Request) {
     const outputPath = path.join(tempDir, 'temp.exe');
     await writeFile(filePath, code);
 
+    // Check if GCC is installed
+    try {
+      await execAsync('gcc --version');
+    } catch (error) {
+      return NextResponse.json({
+        success: false,
+        output: 'GCC compiler is not installed. Please install GCC to compile C code.'
+      });
+    }
+
     // Compile the C code
     const { stdout, stderr } = await execAsync(`gcc ${filePath} -o ${outputPath}`);
 
