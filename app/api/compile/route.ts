@@ -10,17 +10,19 @@ export async function POST(request: Request) {
   try {
     const { code } = await request.json();
     
-    // Write the C code to a temporary file
-    const filePath = path.join(process.cwd(), 'temp.c');
+    // Write the C code to a temporary file in the OS temp directory
+    const tempDir = process.env.TEMP || '/tmp';
+    const filePath = path.join(tempDir, 'temp.c');
+    const outputPath = path.join(tempDir, 'temp.exe');
     await writeFile(filePath, code);
 
     // Compile the C code
-    const { stdout, stderr } = await execAsync(`gcc ${filePath} -o ${path.join(process.cwd(), 'temp.exe')}`);
+    const { stdout, stderr } = await execAsync(`gcc ${filePath} -o ${outputPath}`);
 
     // If compilation is successful, run the program
     if (!stderr) {
       try {
-        const { stdout: programOutput, stderr: programError } = await execAsync(path.join(process.cwd(), 'temp.exe'));
+        const { stdout: programOutput, stderr: programError } = await execAsync(outputPath);
         return NextResponse.json({
           success: true,
           output: `Compilation successful!\nProgram output:\n${programOutput || 'No output'}${programError ? `\nErrors:\n${programError}` : ''}`
