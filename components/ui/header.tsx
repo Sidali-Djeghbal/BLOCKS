@@ -48,10 +48,10 @@ export default function Header() {
               className={`
               fixed md:relative top-0 right-0 h-screen md:h-auto w-64 md:w-auto
               bg-gray-900/95 md:bg-transparent
-              transform ${
+              transform  ${
                 isMenuOpen ? "translate-x-0" : "translate-x-full"
               } md:translate-x-0
-              transition-transform duration-200 ease-in-out
+              transition-transform duration-800 ease-in-out
               flex flex-col md:flex-row
               items-center justify-center md:justify-end
               gap-6 md:gap-3
@@ -94,7 +94,7 @@ export default function Header() {
                     <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
                   </Link>
 
-                  <div className="relative group">
+                  <div className="relative group ">
                     <button 
                       className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
                       onClick={(e) => {
@@ -121,7 +121,7 @@ export default function Header() {
                           const menu = e.currentTarget.nextElementSibling;
                           if (menu) {
                             menu.classList.add('opacity-0');
-                            menu.classList.add('pointer-events-none');
+                            menu.classList.add('');
                           }
                         }
                       }}
@@ -140,7 +140,7 @@ export default function Header() {
                         />
                       </svg>
                     </button>
-                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-in-out">
+                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 opacity-0 group-hover:opacity-100 duration-400 ease-in-out">
                       <Link
                         href="/profileCard"
                         className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"

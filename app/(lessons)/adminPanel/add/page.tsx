@@ -55,8 +55,12 @@ export default function AddLesson() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 sm:p-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">Add New Lesson</h2>
-            <p className="text-lg text-gray-400">Create a new lesson for students</p>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Add New Lesson
+            </h2>
+            <p className="text-lg text-gray-400">
+              Create a new lesson for students
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -133,64 +137,136 @@ export default function AddLesson() {
             </div>
 
             <div>
+              <label
+                htmlFor="challenge"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Challenge Solution
+              </label>
+              <textarea
+                id="challenge"
+                name="challenge"
+                rows={2}
+                required
+                className="mt-1 block w-full rounded-md bg-gray-700 border-transparent focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 text-white"
+                value={formData.challenge}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Difficulty Level
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <label className={`relative flex cursor-pointer rounded-lg border ${formData.difficulty === 'Beginner' ? 'border-green-500' : 'border-gray-700'} bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}>
+                <label
+                  className={`relative flex cursor-pointer rounded-lg border ${
+                    formData.difficulty === "Beginner"
+                      ? "border-green-500"
+                      : "border-gray-700"
+                  } bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}
+                >
                   <input
                     type="radio"
                     name="difficulty"
                     value="Beginner"
-                    checked={formData.difficulty === 'Beginner'}
+                    checked={formData.difficulty === "Beginner"}
                     className="sr-only"
                     onChange={handleInputChange}
                   />
                   <span className="flex flex-1">
                     <span className="flex flex-col">
-                      <span className={`block text-sm font-medium ${formData.difficulty === 'Beginner' ? 'text-green-400' : 'text-gray-300'}`}>Beginner</span>
+                      <span
+                        className={`block text-sm font-medium ${
+                          formData.difficulty === "Beginner"
+                            ? "text-green-400"
+                            : "text-gray-300"
+                        }`}
+                      >
+                        Beginner
+                      </span>
                     </span>
                   </span>
                   <span
-                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${formData.difficulty === 'Beginner' ? 'border-green-500' : 'border-transparent'}`}
+                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${
+                      formData.difficulty === "Beginner"
+                        ? "border-green-500"
+                        : "border-transparent"
+                    }`}
                     aria-hidden="true"
                   />
                 </label>
-                <label className={`relative flex cursor-pointer rounded-lg border ${formData.difficulty === 'Intermediate' ? 'border-yellow-500' : 'border-gray-700'} bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}>
+                <label
+                  className={`relative flex cursor-pointer rounded-lg border ${
+                    formData.difficulty === "Intermediate"
+                      ? "border-yellow-500"
+                      : "border-gray-700"
+                  } bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}
+                >
                   <input
                     type="radio"
                     name="difficulty"
                     value="Intermediate"
-                    checked={formData.difficulty === 'Intermediate'}
+                    checked={formData.difficulty === "Intermediate"}
                     className="sr-only"
                     onChange={handleInputChange}
                   />
                   <span className="flex flex-1">
                     <span className="flex flex-col">
-                      <span className={`block text-sm font-medium ${formData.difficulty === 'Intermediate' ? 'text-yellow-400' : 'text-gray-300'}`}>Intermediate</span>
+                      <span
+                        className={`block text-sm font-medium ${
+                          formData.difficulty === "Intermediate"
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      >
+                        Intermediate
+                      </span>
                     </span>
                   </span>
                   <span
-                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${formData.difficulty === 'Intermediate' ? 'border-yellow-500' : 'border-transparent'}`}
+                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${
+                      formData.difficulty === "Intermediate"
+                        ? "border-yellow-500"
+                        : "border-transparent"
+                    }`}
                     aria-hidden="true"
                   />
                 </label>
-                <label className={`relative flex cursor-pointer rounded-lg border ${formData.difficulty === 'Advanced' ? 'border-red-500' : 'border-gray-700'} bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}>
+                <label
+                  className={`relative flex cursor-pointer rounded-lg border ${
+                    formData.difficulty === "Advanced"
+                      ? "border-red-500"
+                      : "border-gray-700"
+                  } bg-gray-800/50 p-4 focus:outline-none transition-colors duration-200`}
+                >
                   <input
                     type="radio"
                     name="difficulty"
                     value="Advanced"
-                    checked={formData.difficulty === 'Advanced'}
+                    checked={formData.difficulty === "Advanced"}
                     className="sr-only"
                     onChange={handleInputChange}
                   />
                   <span className="flex flex-1">
                     <span className="flex flex-col">
-                      <span className={`block text-sm font-medium ${formData.difficulty === 'Advanced' ? 'text-red-400' : 'text-gray-300'}`}>Advanced</span>
+                      <span
+                        className={`block text-sm font-medium ${
+                          formData.difficulty === "Advanced"
+                            ? "text-red-400"
+                            : "text-gray-300"
+                        }`}
+                      >
+                        Advanced
+                      </span>
                     </span>
                   </span>
                   <span
-                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${formData.difficulty === 'Advanced' ? 'border-red-500' : 'border-transparent'}`}
+                    className={`pointer-events-none absolute -inset-px rounded-lg border-2 ${
+                      formData.difficulty === "Advanced"
+                        ? "border-red-500"
+                        : "border-transparent"
+                    }`}
                     aria-hidden="true"
                   />
                 </label>
@@ -228,13 +304,13 @@ export default function AddLesson() {
               >
                 Add Lesson
               </button>
-                <button
+              <button
                 type="button"
-                onClick={() => router.push('/adminPanel/edit')}
+                onClick={() => router.push("/adminPanel/edit")}
                 className="w-full py-3 px-4 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-transparent hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
-                >
+              >
                 Cancel
-                </button>
+              </button>
             </div>
           </form>
         </div>
