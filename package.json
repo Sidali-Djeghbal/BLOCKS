@@ -43,7 +43,10 @@
     "webpack-dev-server": "^4.11.1"
   },
   "optionalDependencies": {
-  "@tailwindcss/oxide-linux-x64-gnu": "*"
-},
+    "@next/swc-linux-x64-gnu": "15.1.7",
+    "@next/swc-linux-x64-musl": "15.1.7",
+    "lightningcss-linux-x64-gnu": "1.24.1",
+    "lightningcss-linux-x64-musl": "1.24.1"
+  },
   "license": "Apache-2.0"
 }
