@@ -27,18 +27,18 @@ export default function Header() {
               aria-label="Toggle menu"
             >
               <div
-                className={`w-6 h-0.5 bg-gray-300 transition-all ${
-                  isMenuOpen ? "rotate-45 translate-y-1.5" : ""
+                className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
+                  isMenuOpen ? "rotate-45 translate-y-[0.45rem]" : ""
                 }`}
               ></div>
               <div
-                className={`w-6 h-0.5 bg-gray-300 mt-1.5 transition-all ${
-                  isMenuOpen ? "opacity-0" : ""
+                className={`w-6 h-0.5 bg-gray-300 mt-1.5 transition-all duration-300 ${
+                  isMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                 }`}
               ></div>
               <div
-                className={`w-6 h-0.5 bg-gray-300 mt-1.5 transition-all ${
-                  isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+                className={`w-6 h-0.5 bg-gray-300 mt-1.5 transition-all duration-300 ${
+                  isMenuOpen ? "-rotate-45 -translate-y-[0.45rem]" : ""
                 }`}
               ></div>
             </button>
@@ -59,29 +59,73 @@ export default function Header() {
               p-8 md:p-0
             `}
             >
-              {!isLoggedIn ? (  /// TODO: Replace with backend-based logic to display user menu items
+              {!isLoggedIn ? ( /// TODO: Replace with backend-based logic to display user menu items
                 <>
                   <Link
                     href="/"
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className="group relative text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     Home
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
                   </Link>
                   <Link
-                    href="/"
-                    className="text-gray-300 hover:text-white transition-colors"
+                    href="/adminPanel/edit"
+                    className="group relative text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Admin
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
+                  </Link>
+                  <Link
+                    href="/learn"
+                    className="group relative text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     Lessons
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
                   </Link>
                   <Link
                     href="/faq"
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className="group relative text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     Feedback
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
                   </Link>
 
                   <div className="relative group">
-                    <button className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors">
+                    <button 
+                      className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                      onClick={(e) => {
+                        if (window.innerWidth < 768) {
+                          e.stopPropagation();
+                          const menu = e.currentTarget.nextElementSibling;
+                          if (menu) {
+                            menu.classList.toggle('opacity-0');
+                            menu.classList.toggle('pointer-events-none');
+                          }
+                        }
+                      }}
+                      onMouseEnter={(e) => {
+                        if (window.innerWidth >= 768) {
+                          const menu = e.currentTarget.nextElementSibling;
+                          if (menu) {
+                            menu.classList.remove('opacity-0');
+                            menu.classList.remove('pointer-events-none');
+                          }
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (window.innerWidth >= 768) {
+                          const menu = e.currentTarget.nextElementSibling;
+                          if (menu) {
+                            menu.classList.add('opacity-0');
+                            menu.classList.add('pointer-events-none');
+                          }
+                        }
+                      }}
+                    >
                       <svg
                         className="w-5 h-5 text-gray-300"
                         fill="none"
@@ -96,10 +140,16 @@ export default function Header() {
                         />
                       </svg>
                     </button>
-                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-in-out">
                       <Link
                         href="/profileCard"
                         className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                        onClick={(e) => {
+                          setIsMenuOpen(false);
+                          if (window.innerWidth < 768) {
+                            e.currentTarget.parentElement?.classList.add('opacity-0', 'pointer-events-none');
+                          }
+                        }}
                       >
                         My Profile
                       </Link>
@@ -107,6 +157,11 @@ export default function Header() {
                         onClick={() => {
                           // TODO: Implement logout functionality
                           setIsLoggedIn(false);
+                          setIsMenuOpen(false);
+                          if (window.innerWidth < 768) {
+                            const menu = document.querySelector('.group > div');
+                            menu?.classList.add('opacity-0', 'pointer-events-none');
+                          }
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
                       >
@@ -146,3 +201,4 @@ export default function Header() {
     </header>
   );
 }
+
