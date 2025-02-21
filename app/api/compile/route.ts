@@ -1,82 +1,42 @@
 import { NextResponse } from 'next/server';
+import { writeFile } from 'fs/promises';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import path from 'path';
+
+const execAsync = promisify(exec);
 
 export async function POST(request: Request) {
   try {
     const { code } = await request.json();
-    const apiKey = process.env.RAPIDAPI_KEY;
+    
+    // Create temporary file paths
+    const tempDir = path.join(process.cwd(), 'temp');
+    const sourceFile = path.join(tempDir, 'temp.c');
+    const outputFile = path.join(tempDir, 'temp.exe');
 
-    if (!apiKey) {
+    // Write the code to a temporary file
+    await writeFile(sourceFile, code);
+
+    try {
+      // Compile the code using local gcc
+      await execAsync(`gcc "${sourceFile}" -o "${outputFile}"`);
+      
+      // Run the compiled program
+      const { stdout, stderr } = await execAsync(outputFile);
+      
+      return NextResponse.json({
+        success: true,
+        output: `Compilation successful!\nProgram output:\n${stdout || 'No output'}${stderr ? `\nErrors:\n${stderr}` : ''}`
+      });
+    } catch (execError: any) {
       return NextResponse.json({
         success: false,
-        output: 'Compilation error: API key not configured. Please set the RAPIDAPI_KEY environment variable.'
+        output: `Compilation error: ${execError.stderr || execError.message}`
       }, { status: 500 });
     }
 
-    // Use Judge0 API for compilation and execution
-    const response = await fetch('https://judge0-ce.p.rapidapi.com/submissions', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
-      },
-      body: JSON.stringify({
-        source_code: code,
-        language_id: 4, // ID for C (gcc 9.2.0)
-        stdin: '',
-      })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      let errorMessage;
-      try {
-        const parsedError = JSON.parse(errorData);
-        if (parsedError.message === "You are not subscribed to this API.") {
-          errorMessage = "RapidAPI key is not subscribed to the Judge0 API. Please subscribe to the API at https://rapidapi.com/judge0-official/api/judge0-ce";
-        } else {
-          errorMessage = parsedError.message || errorData;
-        }
-      } catch {
-        errorMessage = errorData;
-      }
-      throw new Error(`Failed to compile code: ${errorMessage}`);
-    }
-
-    const { token } = await response.json();
-
-    // Wait for the submission to be processed
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Get the submission result
-    const resultResponse = await fetch(`https://judge0-ce.p.rapidapi.com/submissions/${token}`, {
-      headers: {
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
-      }
-    });
-
-    if (!resultResponse.ok) {
-      const errorData = await resultResponse.text();
-      throw new Error(`Failed to get compilation result: ${errorData}`);
-    }
-
-    const result = await resultResponse.json();
-
-    if (result.status.id === 3) { // Accepted
-      return NextResponse.json({
-        success: true,
-        output: `Compilation successful!\nProgram output:\n${result.stdout || 'No output'}${result.stderr ? `\nErrors:\n${result.stderr}` : ''}`
-      });
-    } else {
-      return NextResponse.json({
-        success: false,
-        output: result.compile_output || result.stderr || 'Compilation failed'
-      });
-    }
-
   } catch (error) {
-    // Return error as JSON
     return NextResponse.json({
       success: false,
       output: `Compilation error: ${error instanceof Error ? error.message : 'Unknown error'}`
