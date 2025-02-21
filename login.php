@@ -11,9 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
+    $csrf_token = $_POST['csrf_token'] ?? '';
 
     if (empty($username) || empty($password)) {
         $error = "Username and password are required.";
+    } elseif (!isset($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
+        $error = "Invalid CSRF token.";
     } else {
         try {
             $sql = "SELECT username, userpassword, role FROM users WHERE username = :username";
@@ -26,51 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($user && password_verify($password, $user['userpassword'])) {
                 session_regenerate_id(true);
                 
-              
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role']; 
 
-                
-                if ($user['role'] === 'Admin') {
-                    header("Location: admin.php");
-                } else {
-                    header("Location: index.php");
-                }
+                header("Location: " . ($user['role'] === 'Admin' ? "admin.php" : "index.php"));
                 exit();
-            } else {
-                $error = "Invalid username or password.";
             }
         } catch (PDOException $e) {
             error_log("Database error: " . $e->getMessage());
-            $error = "An error occurred. Please try again later.";
         }
+
+        $error = "Invalid username or password.";
     }
-
-    $db = null;
 }
+
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 ?>
 
-
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="POST">
-    <h2>LOgin form</h2>
-    <div>
-    <input type="text" name="username" placeholder="username">
-    <input type="email" name="email" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    </div>
-    <button name="submit" value="submit">submit</button>
-   
-    </form>
-    
-</body>
-</html>
