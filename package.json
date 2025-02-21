@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "critters": "^0.0.20",
     "@headlessui/react": "^2.2.0",
     "@next/font": "^14.2.15",
     "@tailwindcss/oxide": "^4.0.7",
