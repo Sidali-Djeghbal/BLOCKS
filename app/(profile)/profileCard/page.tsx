@@ -50,7 +50,8 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {
     };
   }, []);
 
-  role = "admin"; // TO DO: Change this to role = "admin"
+  const fakeRole = "admin";
+  role = fakeRole;
 
   return (
     <div className="flex justify-center items-center h-screen">
