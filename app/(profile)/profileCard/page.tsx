@@ -55,7 +55,6 @@ const FlippableCard = () => {
   }, []);
 
   return (
-    
     <div className="flex justify-center items-center h-screen">
       <div className="relative w-80 h-96 perspective" ref={cardRef}>
         <div
@@ -82,14 +81,14 @@ const FlippableCard = () => {
                   </button>
                 </div>
               ) : (
-                <div className="absolute w-full h-full bg-black/30 border border-yellow-400/30 backdrop-blur-lg text-white rounded-lg shadow-lg flex flex-col justify-center items-center p-4 transform rotate-y-180">
+                <div className="absolute w-full h-full bg-black/30 border border-yellow-400/30 backdrop-blur-lg rounded-lg shadow-lg flex flex-col justify-center items-center p-4 transform rotate-y-180">
                   <Image
                     src="/images/logoAdmin.svg"
                     alt="profile"
                     width={300}
                     height={250}
                   />
-                  <h3 className="animate-gradient rotate-y-180 bg-gradient-to-r from-yellow-100 via-yellow-500 to-yellow-50 bg-clip-text text-4xl font-semibold text-transparent">
+                  <h3 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-yellow-400),var(--color-yellow-200),var(--color-yellow-400),var(--color-yellow-400),var(--color-yellow-400))] bg-[length:200%_auto] bg-clip-text rotate-y-180 text-4xl font-semibold text-transparent">
                     TechGeeks
                   </h3>
                   <button
