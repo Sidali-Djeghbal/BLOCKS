@@ -70,6 +70,14 @@ export default function Header() {
                     <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
                   </Link>
                   <Link
+                    href="/app"
+                    className="group relative text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    App
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-indigo-500 transition-all group-hover:w-full"></span>
+                  </Link>
+                  <Link
                     href="/adminPanel/edit"
                     className="group relative text-gray-300 hover:text-white transition-colors"
                     onClick={() => setIsMenuOpen(false)}
@@ -95,15 +103,15 @@ export default function Header() {
                   </Link>
 
                   <div className="relative group ">
-                    <button 
+                    <button
                       className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
                       onClick={(e) => {
                         if (window.innerWidth < 768) {
                           e.stopPropagation();
                           const menu = e.currentTarget.nextElementSibling;
                           if (menu) {
-                            menu.classList.toggle('opacity-0');
-                            menu.classList.toggle('pointer-events-none');
+                            menu.classList.toggle("opacity-0");
+                            menu.classList.toggle("pointer-events-none");
                           }
                         }
                       }}
@@ -111,8 +119,8 @@ export default function Header() {
                         if (window.innerWidth >= 768) {
                           const menu = e.currentTarget.nextElementSibling;
                           if (menu) {
-                            menu.classList.remove('opacity-0');
-                            menu.classList.remove('pointer-events-none');
+                            menu.classList.remove("opacity-0");
+                            menu.classList.remove("pointer-events-none");
                           }
                         }
                       }}
@@ -120,8 +128,8 @@ export default function Header() {
                         if (window.innerWidth >= 768) {
                           const menu = e.currentTarget.nextElementSibling;
                           if (menu) {
-                            menu.classList.add('opacity-0');
-                            menu.classList.add('');
+                            menu.classList.add("opacity-0");
+                            menu.classList.add("");
                           }
                         }
                       }}
@@ -147,7 +155,10 @@ export default function Header() {
                         onClick={(e) => {
                           setIsMenuOpen(false);
                           if (window.innerWidth < 768) {
-                            e.currentTarget.parentElement?.classList.add('opacity-0', 'pointer-events-none');
+                            e.currentTarget.parentElement?.classList.add(
+                              "opacity-0",
+                              "pointer-events-none"
+                            );
                           }
                         }}
                       >
@@ -159,8 +170,11 @@ export default function Header() {
                           setIsLoggedIn(false);
                           setIsMenuOpen(false);
                           if (window.innerWidth < 768) {
-                            const menu = document.querySelector('.group > div');
-                            menu?.classList.add('opacity-0', 'pointer-events-none');
+                            const menu = document.querySelector(".group > div");
+                            menu?.classList.add(
+                              "opacity-0",
+                              "pointer-events-none"
+                            );
                           }
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
