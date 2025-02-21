@@ -29,7 +29,18 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorData = await response.text();
-      throw new Error(`Failed to compile code: ${errorData}`);
+      let errorMessage;
+      try {
+        const parsedError = JSON.parse(errorData);
+        if (parsedError.message === "You are not subscribed to this API.") {
+          errorMessage = "RapidAPI key is not subscribed to the Judge0 API. Please subscribe to the API at https://rapidapi.com/judge0-official/api/judge0-ce";
+        } else {
+          errorMessage = parsedError.message || errorData;
+        }
+      } catch {
+        errorMessage = errorData;
+      }
+      throw new Error(`Failed to compile code: ${errorMessage}`);
     }
 
     const { token } = await response.json();
