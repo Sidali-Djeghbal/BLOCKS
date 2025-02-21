@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle, FaSyncAlt } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 /*
 interface FlippableCardProps {
@@ -55,7 +56,24 @@ const FlippableCard = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col space-y-8 justify-center items-center h-screen">
+      <Link href="/newAdmin">
+        <button className="btn w-full bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Add new admin
+        </button>
+      </Link>
       <div className="relative w-80 h-96 perspective" ref={cardRef}>
         <div
           className={`card w-full h-full transition-transform duration-500 transform ${

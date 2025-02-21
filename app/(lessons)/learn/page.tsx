@@ -10,7 +10,6 @@ interface Lesson {
   content: string;
   description: string;
   picture: string;
-  duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   challenge?: string;
   solution?: string;
@@ -23,7 +22,6 @@ const sampleLessons: Lesson[] = [
     content: 'Learn the fundamentals of web development including HTML, CSS, and JavaScript. This comprehensive lesson will guide you through the basic building blocks of modern web applications. We will cover essential concepts like HTML structure, CSS styling, and JavaScript interactivity. You will learn about semantic markup, responsive design principles, and basic programming concepts that form the foundation of web development.',
     description: 'Start your journey in web development with core concepts and practical examples.',
     picture: '/images/hero-image-01.svg',
-    duration: '45 mins',
     difficulty: 'Beginner',
     challenge: 'Create a simple webpage that includes a header, navigation menu, main content area, and footer. Style it using CSS to be responsive and visually appealing.',
         solution: `Heres a basic structure for the webpage:
@@ -60,7 +58,6 @@ const sampleLessons: Lesson[] = [
     content: 'Master the art of creating responsive websites that work seamlessly across all devices. Learn about media queries, flexible grids, and mobile-first design approaches.',
     description: 'Create websites that look great on any device.',
     picture: '/images/features.svg',
-    duration: '60 mins',
     difficulty: 'Intermediate'
   },
   {
@@ -69,7 +66,6 @@ const sampleLessons: Lesson[] = [
     content: 'Dive deep into advanced JavaScript concepts including closures, promises, async/await, and modern ES6+ features.',
     description: 'Take your JavaScript skills to the next level.',
     picture: '/images/workflow-02-inspiration.svg',
-    duration: '90 mins',
     difficulty: 'Advanced'
   }
 ];
@@ -112,7 +108,6 @@ export default function LearnPage() {
               </h3>
               <p className="text-gray-400 mb-4">{lesson.description}</p>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-indigo-400">{lesson.duration}</span>
                 <span
                   className={`px-3 py-1 rounded-full ${
                     lesson.difficulty === "Beginner"
@@ -182,9 +177,6 @@ export default function LearnPage() {
                           }`}
                         >
                           {selectedLesson.difficulty}
-                        </span>
-                        <span className="text-indigo-400">
-                          {selectedLesson.duration}
                         </span>
                       </div>
                     </div>

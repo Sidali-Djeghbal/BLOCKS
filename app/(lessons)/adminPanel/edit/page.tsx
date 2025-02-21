@@ -134,7 +134,6 @@ export default function EditLesson() {
   }
 
   return (
-    
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -143,23 +142,25 @@ export default function EditLesson() {
             Edit or remove existing lessons
           </p>
         </div>
-        <Link href="/adminPanel/add">
-          <button className="bg-green-600 px-4 py-2 rounded-md text-white mb-8 hover:bg-green-700 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 mr-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Add Lesson
-          </button>
-        </Link>
+        <div className="flex flex-row gap-4 items-center mb-8">
+          <Link href="/adminPanel/add">
+            <button className="bg-green-600 p-2 rounded-md text-white mb-8 hover:bg-green-700 flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Add Lesson
+            </button>
+          </Link>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {lessons.map((lesson) => (
             <div
@@ -179,26 +180,25 @@ export default function EditLesson() {
                 {lesson.title}
               </h3>
               <p className="text-gray-400 mb-4">{lesson.description}</p>
-              <div className="flex items-center justify-between text-sm mb-4">
-                <span className="text-indigo-400">{lesson.duration}</span>
-                <span
-                  className={`px-3 py-1 rounded-full ${
-                    lesson.difficulty === "Beginner"
-                      ? "bg-green-900/50 text-green-400"
-                      : lesson.difficulty === "Intermediate"
-                      ? "bg-yellow-900/50 text-yellow-400"
-                      : "bg-red-900/50 text-red-400"
-                  }`}
-                >
-                  {lesson.difficulty}
-                </span>
-              </div>
-              <div 
-                className="flex justify-end space-x-2" 
+              <span
+                className={`px-3 py-1 rounded-full ${
+                  lesson.difficulty === "Beginner"
+                    ? "bg-green-900/50 text-green-400"
+                    : lesson.difficulty === "Intermediate"
+                    ? "bg-yellow-900/50 text-yellow-400"
+                    : "bg-red-900/50 text-red-400"
+                }`}
+              >
+                {lesson.difficulty}
+              </span>
+              <div
+                className="flex justify-end space-x-2"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
-                  onClick={() => setSelectedLesson({ ...lesson, isEditing: true })}
+                  onClick={() =>
+                    setSelectedLesson({ ...lesson, isEditing: true })
+                  }
                   className="group relative p-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
                 >
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/50 to-blue-400/50 blur-sm group-hover:blur-md transition-all duration-300"></div>
@@ -222,7 +222,11 @@ export default function EditLesson() {
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
-                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                    <path
+                      fillRule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </button>
               </div>
