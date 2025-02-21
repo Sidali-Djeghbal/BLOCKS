@@ -50,6 +50,8 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {
     };
   }, []);
 
+  role = "admin"; // TO DO: Change this to role = "admin"
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="relative w-80 h-96 perspective" ref={cardRef}>
@@ -58,7 +60,7 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ role }) => {
             isFlipped ? "rotate-y-180" : ""
           }`}
         >
-          {"admin" === "admin" ? ( // TO DO: Change this to role === "admin"
+          {role === "admin" ? ( // TO DO: Change this to role === "admin"
             <>
               {!isFlipped ? (
                 <div
