@@ -1,6 +1,12 @@
 <?php
 session_start();
+session_regenerate_id(true);
+
 require "blockdatabase.php";
+
+if (!isset($db)) {
+    die("Database connection error.");
+}
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
     header("Location: index.php");
@@ -8,6 +14,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
 }
 
 function addLesson($db, $lesson_name, $lesson_text, $lesson_challenge, $solution_challenge) {
+    if (!preg_match('/^[a-zA-Z0-9\s\-]{3,50}$/', $lesson_name)) {
+        throw new Exception("Invalid lesson name.");
+    }
+
     $sql = "INSERT INTO lessons (lesson_name, lesson_text, lesson_challenge, solution_challenge) 
             VALUES (:lesson_name, :lesson_text, :lesson_challenge, :solution_challenge)";
     $stmt = $db->prepare($sql);
@@ -16,6 +26,35 @@ function addLesson($db, $lesson_name, $lesson_text, $lesson_challenge, $solution
         ':lesson_text' => trim($lesson_text),
         ':lesson_challenge' => trim($lesson_challenge),
         ':solution_challenge' => trim($solution_challenge)
+    ]);
+}
+
+function addAdmin($db, $username, $useremail, $userpassword) {
+    if (!filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception("Invalid email format.");
+    }
+
+    if (!preg_match('/^[a-zA-Z0-9_]{3,50}$/', $username)) {
+        throw new Exception("Invalid username.");
+    }
+
+    $checkStmt = $db->prepare("SELECT user_id FROM users WHERE useremail = :useremail");
+    $checkStmt->execute([':useremail' => $useremail]);
+    
+    if ($checkStmt->fetch()) {
+        throw new Exception("Email is already registered.");
+    }
+
+    $hashedPassword = password_hash($userpassword, PASSWORD_ARGON2ID);
+
+    $sql = "INSERT INTO users (username, useremail, userpassword, role) 
+            VALUES (:username, :useremail, :userpassword, 'Admin')";
+    $stmt = $db->prepare($sql);
+
+    return $stmt->execute([
+        ':username' => $username,
+        ':useremail' => $useremail,
+        ':userpassword' => $hashedPassword
     ]);
 }
 
@@ -59,3 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $lessons = getLessons($db);
 ?>
+
