@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
+import { existsSync } from 'fs';
 
 const execAsync = promisify(exec);
 
@@ -12,6 +13,12 @@ export async function POST(request: Request) {
     
     // Create temporary file paths
     const tempDir = path.join(process.cwd(), 'temp');
+    
+    // Ensure temp directory exists
+    if (!existsSync(tempDir)) {
+      await mkdir(tempDir, { recursive: true });
+    }
+    
     const sourceFile = path.join(tempDir, 'temp.c');
     const outputFile = path.join(tempDir, 'temp.exe');
 
