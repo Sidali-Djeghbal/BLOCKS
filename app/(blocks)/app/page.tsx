@@ -45,7 +45,7 @@ const BlocklyApp: React.FC = () => {
     // Initialize Blockly workspace
     workspaceRef.current = Blockly.inject(blocklyDivRef.current, {
       toolbox,
-      zoom: {
+      zoom: { 
         controls: true,
         wheel: true,
         startScale: 1.0,
