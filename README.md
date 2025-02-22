@@ -56,10 +56,11 @@ TG Blocks provides a **visual representation of algorithms** alongside their cor
 
 ---
 
-## IV. Installation Guide
-
 ### Live preview (Beta version) available
    check it on : https://tg-blocks.vercel.app/
+
+
+## IV. Installation Guide
 
 ### Prerequisites
 - Node.js and npm (for frontend setup)
