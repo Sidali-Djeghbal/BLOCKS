@@ -62,8 +62,8 @@ try {
     ";
 
 
-    // Execute SQL statements
-    $statment=$conn->prepare($sql);
+   
+    $statment=$db->prepare($sql);
     $statment->execute();
     echo "Tables created successfully.<br>";
 
@@ -71,6 +71,6 @@ try {
     echo "Error: " . $e->getMessage();
 }
 
-// Close connection
+
 $db=null;
 ?>
