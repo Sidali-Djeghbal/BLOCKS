@@ -1,24 +1,23 @@
+
 <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
+$dbname = "my_database1";
 
 try {
-    
+  
     $db = new PDO("mysql:host=$servername", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    
+    $db->exec("CREATE DATABASE IF NOT EXISTS $dbname");
+    
   
-    $dbname = "my_database";
-    $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
-    $db->exec($sql);
-    echo "Database '$dbname' created successfully.<br>";
-
-   
-    $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $db = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  
+    
     $sql = "
     CREATE TABLE IF NOT EXISTS users (
         user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,16 +60,8 @@ try {
     );
     ";
 
-
-   
-    $statment=$db->prepare($sql);
-    $statment->execute();
-    echo "Tables created successfully.<br>";
-
+    $db->exec($sql);
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    die("Database connection failed: " . $e->getMessage());
 }
-
-
-$db=null;
 ?>
