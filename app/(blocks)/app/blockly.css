@@ -1,8 +1,7 @@
-body{
-  color: black;
-}
+
 
 .flex-container {
+    color: black;
   display: flex;
   width: 95vw;
   height: 95vh;
