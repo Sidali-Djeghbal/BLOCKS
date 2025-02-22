@@ -58,6 +58,9 @@ TG Blocks provides a **visual representation of algorithms** alongside their cor
 
 ## IV. Installation Guide
 
+### Live preview (Beta version) available
+   check it on : https://tg-blocks.vercel.app/
+
 ### Prerequisites
 - Node.js and npm (for frontend setup)
 - PHP and Composer (for backend setup)
@@ -75,9 +78,6 @@ TG Blocks provides a **visual representation of algorithms** alongside their cor
 
 2. **Access the Application**
    Open `http://localhost:3000` in your browser.
-
-3. **Live preview (Beta version) available**
-   check it on : https://tg-blocks.vercel.app/
 
 ---
 
