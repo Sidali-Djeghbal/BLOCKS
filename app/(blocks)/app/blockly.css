@@ -13,6 +13,8 @@
 
 /* Output Panel Styles */
 .output-pane {
+      color: black;
+
   flex: 0 0 400px;
   display: flex;
   flex-direction: column;
@@ -24,6 +26,8 @@
 
 /* Generated Code Area */
 .generated-code {
+      color: black;
+
   flex: 1;
   background-color: rgb(247, 240, 228);
   border-radius: 0.5rem;
@@ -37,6 +41,8 @@
 
 /* Output Area */
 .output-area {
+      color: black;
+
   flex: 1;
   background-color: white;
   border-radius: 0.5rem;
@@ -47,6 +53,8 @@
 
 /* Blockly Workspace */
 .blockly-workspace {
+      color: black;
+
   flex: 1;
   min-width: 60vw;
   height: 100%;
