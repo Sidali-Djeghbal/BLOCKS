@@ -76,6 +76,9 @@ TG Blocks provides a **visual representation of algorithms** alongside their cor
 2. **Access the Application**
    Open `http://localhost:3000` in your browser.
 
+3. **/Live preview (Beta version) available:
+   check it on : https://tg-blocks.vercel.app/
+
 ---
 
 ## V. Target Audience
