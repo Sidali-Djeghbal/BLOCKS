@@ -1,7 +1,5 @@
-
-
 .flex-container {
-    color: black;
+  color: black;
   display: flex;
   width: 95vw;
   height: 95vh;
@@ -13,7 +11,7 @@
 
 /* Output Panel Styles */
 .output-pane {
-      color: black;
+  color: black;
 
   flex: 0 0 400px;
   display: flex;
@@ -26,7 +24,7 @@
 
 /* Generated Code Area */
 .generated-code {
-      color: black;
+  color: black;
 
   flex: 1;
   background-color: rgb(247, 240, 228);
@@ -41,7 +39,7 @@
 
 /* Output Area */
 .output-area {
-      color: black;
+  color: black;
 
   flex: 1;
   background-color: white;
@@ -53,8 +51,7 @@
 
 /* Blockly Workspace */
 .blockly-workspace {
-      color: black;
-
+  color: black;
   flex: 1;
   min-width: 60vw;
   height: 100%;
@@ -62,6 +59,28 @@
   border: 1px solid #e0e0e0;
   overflow: hidden;
   position: relative;
+}
+
+.blocklyToolboxDiv {
+  color: black;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background-color: #c8c8c8;
+  padding: 0.5rem;
+  max-height:25vh;
+  margin: 10px auto;
+  border-radius: 0.5rem;
+  display: block;
+  position: absolute;
+
+}
+
+.blockly-workspace * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.blocklyScrollbarVertical, .blocklyScrollbarHorizontal {
+  width: 1px;
 }
 
 /* Responsive Layout */
