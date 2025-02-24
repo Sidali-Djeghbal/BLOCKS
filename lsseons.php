@@ -6,9 +6,9 @@ if(!isset($_SESSION["username"])){
 }
 include "blockdatabase.php";
 try{
-$sql = "SELECT * FROM lessons WHERE username = :username";
+$sql = "SELECT * FROM lessons";
 $stmt = $db->prepare($sql);
-$stmt->bindParam(":username", $_SESSION["username"], PDO::PARAM_STR);
+
 $stmt->execute();
 $lessons = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
