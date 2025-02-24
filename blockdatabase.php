@@ -6,18 +6,14 @@ $password = "";
 $dbname = "my_database1";
 
 try {
-  
     $db = new PDO("mysql:host=$servername", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    
-    $db->exec("CREATE DATABASE IF NOT EXISTS $dbname");
-    
-  
-    $db = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
+    $db->exec($sql);
 
-    
+    $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "
     CREATE TABLE IF NOT EXISTS users (
         user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -52,16 +48,30 @@ try {
     CREATE TABLE IF NOT EXISTS feedback (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id int not null,
-    email varchar(50) not null,
-    subject varchar(50) not null,
+    email VARCHAR(50) not null,
+    subject VARCHAR(50) not null,
     message TEXT not null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
     );
-    ";
-
+  CREATE TABLE IF NOT EXISTS algorithms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    algorithm_name VARCHAR(50) NOT NULL,
+    code TEXT NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_by VARCHAR(50) NOT NULL DEFAULT 'ADMIN'
+);
+CREATE TABLE IF NOT EXISTS pending_algorithm_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    algorithm_name VARCHAR(50) NOT NULL,
+    code TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+";
     $db->exec($sql);
 } catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    die("Database connection error: " . $e->getMessage());
 }
 ?>
