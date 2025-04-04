@@ -4,6 +4,7 @@ export const metadata = {
 };
 
 import Link from "next/link";
+import fetchWithAuth from "../../../utils/api";
 
 export default function SignIn() {
   return (
@@ -17,7 +18,7 @@ export default function SignIn() {
             </h1>
           </div>
           {/* Contact form */}
-          <form className="mx-auto max-w-[400px]">
+          <form className="mx-auto max-w-[400px]" onSubmit={handleSignIn}>
             <div className="space-y-5">
               <div>
                 <label
@@ -80,3 +81,31 @@ export default function SignIn() {
     </section>
   );
 }
+
+const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const email = (event.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement;
+  const emailValue = email.value;
+const password = (event.target as HTMLFormElement).elements.namedItem('password') as HTMLInputElement;
+const passwordValue = password.value;
+
+  try {
+    const response = await fetchWithAuth("/api/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({ email: emailValue, password: passwordValue }),
+    });
+
+    // Store token in localStorage
+    localStorage.setItem("token", response.data.token);
+
+    // Redirect to home page after successful login
+    window.location.href = "/";
+  } catch (error) {
+    // Display error message to user
+    alert(error instanceof Error ? error.message : 'An error occurred');
+  }
+};

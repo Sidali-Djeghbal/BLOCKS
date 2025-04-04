@@ -7,6 +7,7 @@ import { CGenerator } from "../config/generators/c";
 import { toolbox } from "../config/toolbox";
 import "./blockly.css";
 import { useState } from "react";
+import { API_ENDPOINTS } from "../../../utils/api";
 
 const BlocklyApp: React.FC = () => {
   const blocklyDivRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ const BlocklyApp: React.FC = () => {
 
     try {
       const code = CGenerator.workspaceToCode(workspaceRef.current);
-      const response = await fetch("/api/compile", {
+      const response = await fetch(API_ENDPOINTS.COMPILE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
