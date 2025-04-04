@@ -74,7 +74,7 @@ TG Blocks provides a **visual representation of algorithms** alongside their cor
    git clone https://github.com/Sidali-Djeghbal/BLOCKS.git
    cd BLOCKS
    npm install
-   npm start
+   npm run Start
    ```
 
 2. **Access the Application**
